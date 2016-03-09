@@ -1,47 +1,43 @@
 'use strict';
+
 import React, {
   AppRegistry,
   Component,
-  StyleSheet,
-  Text,
-  View
+  Navigator
 } from 'react-native';
+
+import Splash from './App/Splash';
+import List from './App/List';
+import Detail from './App/Detail';
 
 class BilgiShuttleAndroid extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+      <Navigator
+          initialRoute={{id: 'Splash', name: 'Index'}}
+          renderScene={this.renderScene.bind(this)}
+          configureScene={(route) => {
+            if (route.sceneConfig) {
+              return route.sceneConfig;
+            }
+            return Navigator.SceneConfigs.FloatFromRight;
+          }} />
     );
   }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  renderScene(route, navigator) {
+    switch (route.id) {
+      case 'Splash':
+        return ( <Splash navigator={navigator} /> );
+        break;
+      case 'List':
+        return ( <List navigator={navigator} /> );
+        break;
+      case 'Detail':
+        return ( <Detail navigator={navigator} /> );
+        break;
+    }
+  }
+}
 
 AppRegistry.registerComponent('BilgiShuttleAndroid', () => BilgiShuttleAndroid);

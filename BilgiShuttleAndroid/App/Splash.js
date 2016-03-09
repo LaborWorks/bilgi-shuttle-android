@@ -5,12 +5,20 @@ import React, {
   View
 } from 'react-native';
 
-export default class Detail extends Component {
+export default class Splash extends Component {
+  componentWillMount() {
+    setTimeout( () => {
+      this.props.navigator.replace ({
+        id: 'List'
+      });
+    }, 1000);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.splash}>
-          Detail
+          BilgiShuttle Splash Screen
         </Text>
       </View>
     );
@@ -22,11 +30,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#D50000'
   },
   splash: {
     fontSize: 24,
     textAlign: 'center',
-    color: '#000'
+    color: '#fff'
   },
 });

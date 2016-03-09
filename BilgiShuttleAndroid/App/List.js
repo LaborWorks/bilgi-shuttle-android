@@ -1,13 +1,13 @@
 import React, {
-	View,
-	ScrollView,
-	Text,
-	Image,
-	StyleSheet,
-	TouchableHighlight,
-	AsyncStorage,
+  View,
+  ScrollView,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+  AsyncStorage,
   Alert,
-  // ActivityIndicatorIOS,
+  Navigator
 } from 'react-native';
 
 import Detail from './Detail';
@@ -24,7 +24,7 @@ const dbVersion_KEY = '@BilgiShutte:dbVersion';
 const data_KEY = '@BilgiShutte:data';
 
 export default class List extends React.Component {
-	constructor(props) {
+  constructor(props) {
 		super(props);
     this.state = {
       loaded: false,
@@ -97,7 +97,7 @@ export default class List extends React.Component {
         }
       })
       .catch((error) => {
-        AlertIOS.alert('Warning!', 'You have no internet connection, cached DB will be used to display data!');
+        Alert.alert('Warning!', 'You have no internet connection, cached DB will be used to display data!');
         AsyncStorage.getItem(data_KEY).then((value) => {
             const readData = JSON.parse(value);
             this.setState({data: {nodes: readData.nodes, routes: readData.routes}, loaded: true});
@@ -118,9 +118,9 @@ export default class List extends React.Component {
       })
       .catch((error) => {
         if(!currentDatabaseVersion){
-          AlertIOS.alert('Error!', 'You need to be connected to the internet.');
+          Alert.alert('Error!', 'You need to be connected to the internet.');
         } else {
-          AlertIOS.alert(':D', 'Version update esnasında internet giderse bu olacak');
+          Alert.alert(':D', 'Version update esnasında internet giderse bu olacak');
         }
       })
       .done();
@@ -136,14 +136,14 @@ export default class List extends React.Component {
           console.log('Data updated to: ', value);
         });
       })
-      .catch((error) => AlertIOS.alert(':D', 'Data update esnasında internet giderse bu olacak'))
+      .catch((error) => console.log(error))
       .done();
   }
 
 	goToRoutePage(nodeName, nodeID) {
 		this.props.navigator.push({
-          component: Detail,
-          title: nodeName,
+          id: 'Detail',
+          name: nodeName,
           passProps: {
           	data: this.state.data,
             nodeID: nodeID,
@@ -153,8 +153,18 @@ export default class List extends React.Component {
 
 	// ----------------------------------------------------- //
 
-	render() {
-		const nodeList = this.state.data.nodes.map((node, index) => {
+  render() {
+    return (
+      <Navigator
+        renderScene={this.renderScene.bind(this)}
+        navigationBar= {
+          <Navigator.NavigationBar style={styles.navCore} routeMapper={NavigationBarRouteMapper} /> }
+        />
+    );
+  }
+
+  renderScene(route, navigator) {
+    const nodeList = this.state.data.nodes.map((node, index) => {
 			return (
 				<TouchableHighlight
 					key={index}
@@ -174,36 +184,65 @@ export default class List extends React.Component {
 			);
 		});
 
-		return (
-			<ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-			 {this.state.loaded ? nodeList :
-				 ''
-			 }
+    return (
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+			 { this.state.loaded ? nodeList : <Text> Loading </Text> }
 			</ScrollView>
-		);
-	}
+    );
+  }
 }
 
+const NavigationBarRouteMapper = {
+  LeftButton(route, navigator, index, navState) {
+    return null;
+  },
+  RightButton(route, navigator, index, navState) {
+    return null;
+  },
+  Title(route, navigator, index, navState) {
+    return (
+      <View style={styles.navContainer}>
+        <Text style={styles.navText}>
+          BilgiShuttle
+        </Text>
+      </View>
+    );
+  }
+};
+
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#F0F0F0',
-	},
+  navCore: {
+    backgroundColor: '#D50000',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  navContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  navText: {
+    color: '#FFF',
+    fontSize: 20
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: '#F0F0F0',
+  },
 
   contentContainer: {
-  	flexDirection: 'row',
+    flexDirection: 'row',
     flexWrap: 'wrap',
 
     justifyContent: 'center',
     alignItems: 'center',
 
-    marginTop: 5,
+    marginTop: 60,
 
     backgroundColor: '#F0F0F0'
-  },
-
-  activityIndicator: {
-    marginTop: 100
   },
 
   nodeBoxContainer: {
@@ -211,7 +250,7 @@ const styles = StyleSheet.create({
   },
 
   nodeBox: {
-  	alignItems: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
 
     paddingTop: 15,
@@ -225,19 +264,22 @@ const styles = StyleSheet.create({
     borderColor: '#DDD',
     borderBottomColor: '#D50000',
   },
+
   nodeImage: {
     width: (deviceWidth/4),
     height: (deviceWidth/4)-30,
   },
+
   nodeTitle: {
     fontSize: 16,
     textAlign: 'center',
     marginTop: 15,
     color: '#151515'
   },
+
   emptyArea: {
-  	flex: 1,
-  	height: 250,
-  	backgroundColor: 'black'
+    flex: 1,
+    height: 250,
+    backgroundColor: 'black'
   }
 });

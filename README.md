@@ -1,4 +1,4 @@
-#Bilgi Shuttle Android Application (in Progress)
+#Bilgi Shuttle Android Application
 
 Basic but useful Android application for listing the shuttle routes and times of İstanbul Bilgi University, built with [React Native](https://facebook.github.io/react-native/).
 
