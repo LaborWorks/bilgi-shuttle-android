@@ -4,8 +4,8 @@ Basic but useful Android application for listing the shuttle routes and times of
 
 Data comes from [bilgi-shuttle-api](https://github.com/mdegis/bilgi-shuttle/), processed and shown in this application.
 
-iOS version: [bilgi-shuttle-ios](https://github.com/bilgishuttle/bilgi-shuttle-ios)
-Web version: [bilgi-shuttle-webapp](https://github.com/bilgishuttle/bilgi-shuttle-web)
+- iOS version: [bilgi-shuttle-ios](https://github.com/bilgishuttle/bilgi-shuttle-ios)
+- Web version: [bilgi-shuttle-webapp](https://github.com/bilgishuttle/bilgi-shuttle-web)
 
 ##Installation
 ```bash
@@ -13,10 +13,10 @@ Web version: [bilgi-shuttle-webapp](https://github.com/bilgishuttle/bilgi-shuttl
 https://nodejs.org/
 
 # Clone the repository
-$ git clone https://github.com/zebrasinpyjamas/bilgi-shuttle-android.git
+$ git clone https://github.com/bilgishuttle/bilgi-shuttle-android.git
 
 # Go to app folder
-$ cd bilgi-shuttle-android/BilgiShuttle
+$ cd bilgi-shuttle-android/BilgiShuttleAndroid
 
 # Run npm install
 $ npm install
@@ -24,11 +24,18 @@ $ npm install
 
 ##Usage
 ```bash
-### .
+## Open your Android emulator. (We use Genymotion)
+
+## Then run the following command inside project folder.
+$ react-native run-android
+
+## Developer menu can be opened by using devices' menu.
 ```
 
 ##Screenshots
-.
+<img src="Screenshots/bs_android_01.png" width="33%">
+<img src="Screenshots/bs_android_02.png" width="33%">
+<img src="Screenshots/bs_android_03.png" width="33%">
 
 ##License
 

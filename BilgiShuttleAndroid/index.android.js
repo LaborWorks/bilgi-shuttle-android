@@ -11,17 +11,10 @@ import List from './App/List';
 import Detail from './App/Detail';
 
 class BilgiShuttleAndroid extends Component {
+
   render() {
     return (
-      <Navigator
-          initialRoute={{id: 'Splash', name: 'Index'}}
-          renderScene={this.renderScene.bind(this)}
-          configureScene={(route) => {
-            if (route.sceneConfig) {
-              return route.sceneConfig;
-            }
-            return Navigator.SceneConfigs.FloatFromRight;
-          }} />
+      <Navigator initialRoute={{id:'Splash'}} renderScene={this.renderScene.bind(this)} />
     );
   }
 
@@ -34,7 +27,7 @@ class BilgiShuttleAndroid extends Component {
         return ( <List navigator={navigator} /> );
         break;
       case 'Detail':
-        return ( <Detail navigator={navigator} /> );
+        return ( <Detail navigator={navigator} name={route.name} data={route.data} nodeID={route.nodeID} />);
         break;
     }
   }

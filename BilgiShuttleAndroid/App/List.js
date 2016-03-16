@@ -7,7 +7,9 @@ import React, {
   TouchableHighlight,
   AsyncStorage,
   Alert,
-  Navigator
+  Navigator,
+  ToolbarAndroid,
+  BackAndroid
 } from 'react-native';
 
 import Detail from './Detail';
@@ -26,6 +28,7 @@ const data_KEY = '@BilgiShutte:data';
 export default class List extends React.Component {
   constructor(props) {
 		super(props);
+
     this.state = {
       loaded: false,
       dbVersion: {
@@ -35,6 +38,14 @@ export default class List extends React.Component {
         routes: []
       }
     }
+
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      if (this.props.navigator.getCurrentRoutes().length === 1  ) {
+         return false;
+      }
+      this.props.navigator.pop();
+      return true;
+    });
   }
 
   // WORKING & UPDATED PART FOR ASYNCSTORAGE -------------- //
@@ -50,13 +61,13 @@ export default class List extends React.Component {
       // if db.version is null (new installed app)
       if(!value) {
         // display current data
-        console.log('Current database version: ', value);
+        // console.log('Current database version: ', value);
         AsyncStorage.getItem(data_KEY).then((value) => {
-          console.log('Current Database: ', JSON.parse(value));
+          // console.log('Current Database: ', JSON.parse(value));
         });
 
         // message
-        console.log('There is no DB!!! Getting it...');
+        // console.log('There is no DB!!! Getting it...');
 
         // do the job!
         this.updateDatabaseVersion(value);
@@ -65,13 +76,13 @@ export default class List extends React.Component {
       // if db.version is not null (we have a database!)
       else {
         // display current data
-        console.log('Current database version: ', value);
+        // console.log('Current database version: ', value);
         AsyncStorage.getItem(data_KEY).then((value) => {
-          console.log('Current Data: ', JSON.parse(value));
+          // console.log('Current Data: ', JSON.parse(value));
         });
 
         // check database version
-        console.log('Checking Database Version');
+        // console.log('Checking Database Version');
         this.checkDatabaseVersion(value);
       }
     });
@@ -83,12 +94,12 @@ export default class List extends React.Component {
       .then((res) => {
         // if current db is older
         if(currentDatabaseVersion < res.database_version.version_number){
-            console.log('YOUR DB IS OLD!');
-            console.log('Updating Database...');
+            // console.log('YOUR DB IS OLD!');
+            // console.log('Updating Database...');
             this.updateDatabaseVersion(currentDatabaseVersion);
             this.updateData();
         } else {
-          console.log('DB UP TO DATE!');
+          // console.log('DB UP TO DATE!');
           this.setState({dbVersion: res.database_version});
           AsyncStorage.getItem(data_KEY).then((value) => {
             const readData = JSON.parse(value);
@@ -113,7 +124,7 @@ export default class List extends React.Component {
         this.setState({dbVersion: res.database_version});
         AsyncStorage.setItem(dbVersion_KEY, this.state.dbVersion.version_number.toString());
         AsyncStorage.getItem(dbVersion_KEY).then((value) => {
-          console.log('Database updated to version: ', value);
+          // console.log('Database updated to version: ', value);
         });
       })
       .catch((error) => {
@@ -133,7 +144,7 @@ export default class List extends React.Component {
         this.setState({data: {nodes: res.nodes, routes: res.routes}, loaded: true});
         AsyncStorage.setItem(data_KEY, JSON.stringify(this.state.data));
         AsyncStorage.getItem(data_KEY).then((value) => {
-          console.log('Data updated to: ', value);
+          // console.log('Data updated to: ', value);
         });
       })
       .catch((error) => console.log(error))
@@ -142,12 +153,10 @@ export default class List extends React.Component {
 
 	goToRoutePage(nodeName, nodeID) {
 		this.props.navigator.push({
-          id: 'Detail',
-          name: nodeName,
-          passProps: {
-          	data: this.state.data,
-            nodeID: nodeID,
-          }
+        id: 'Detail',
+        data: this.state.data,
+        name: nodeName,
+        nodeID
     });
 	}
 
@@ -155,11 +164,7 @@ export default class List extends React.Component {
 
   render() {
     return (
-      <Navigator
-        renderScene={this.renderScene.bind(this)}
-        navigationBar= {
-          <Navigator.NavigationBar style={styles.navCore} routeMapper={NavigationBarRouteMapper} /> }
-        />
+      <Navigator renderScene={this.renderScene.bind(this)} />
     );
   }
 
@@ -185,36 +190,20 @@ export default class List extends React.Component {
 		});
 
     return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-			 { this.state.loaded ? nodeList : <Text> Loading </Text> }
-			</ScrollView>
+      <View style={styles.container}>
+        <ToolbarAndroid style={styles.navCore} titleColor="white" title="Bilgi Shuttle" />
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          { this.state.loaded ? nodeList : <Text> Loading </Text> }
+        </ScrollView>
+      </View>
     );
   }
 }
 
-const NavigationBarRouteMapper = {
-  LeftButton(route, navigator, index, navState) {
-    return null;
-  },
-  RightButton(route, navigator, index, navState) {
-    return null;
-  },
-  Title(route, navigator, index, navState) {
-    return (
-      <View style={styles.navContainer}>
-        <Text style={styles.navText}>
-          BilgiShuttle
-        </Text>
-      </View>
-    );
-  }
-};
-
 const styles = StyleSheet.create({
   navCore: {
     backgroundColor: '#D50000',
-    justifyContent: 'center',
-    alignItems: 'center'
+    height: 56
   },
 
   navContainer: {
@@ -240,8 +229,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    marginTop: 60,
-
     backgroundColor: '#F0F0F0'
   },
 
@@ -253,7 +240,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-    paddingTop: 15,
+    paddingTop: 10,
     margin: 10,
     width: (deviceWidth/2)-30,
     height: 130,
@@ -273,13 +260,8 @@ const styles = StyleSheet.create({
   nodeTitle: {
     fontSize: 16,
     textAlign: 'center',
-    marginTop: 15,
+    marginTop: 5,
     color: '#151515'
   },
 
-  emptyArea: {
-    flex: 1,
-    height: 250,
-    backgroundColor: 'black'
-  }
 });
