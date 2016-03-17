@@ -33,11 +33,11 @@ $ react-native run-android
 ```
 
 ##Screenshots
-<img src="Screenshots/bs_android_01.png" width="20%">
-<img src="Screenshots/bs_android_02.png" width="20%">
-<img src="Screenshots/bs_android_03.png" width="20%">
-<img src="Screenshots/bs_android_04.png" width="20%">
-<img src="Screenshots/bs_android_05.png" width="20%">
+<img src="Screenshots/bs_android_01.png" width="19%">
+<img src="Screenshots/bs_android_02.png" width="19%">
+<img src="Screenshots/bs_android_03.png" width="19%">
+<img src="Screenshots/bs_android_04.png" width="19%">
+<img src="Screenshots/bs_android_05.png" width="19%">
 
 
 ##License
