@@ -113,13 +113,33 @@ export default class Detail extends Component {
       let timeRemaining = nextValues.in_secs;
       let isRing = nextValues.ring;
       let nextOne = nextValues.next_next_one;
+
+      // rawData manipulation
       let rawData = route.raw_data;
+			let rawArr = rawData.split(' - ');
+			let newArr = [];
+			let rawNew = [];
+
+			while(rawArr.length > 0) {
+        newArr.push(rawArr.splice(0, 8));
+			}
+
+			newArr.map((item) => {
+				let temp = item.join(' - ');
+				rawNew.push(temp);
+			});
+
+			let rawPrint = rawNew.map((item, index) => {
+				return (
+					<Text key={index} style={styles.routeRawData}>{item}</Text>
+				);
+			});
 
 			return (
 				<View key={index} style={styles.routeBox}>
 					<Text style={styles.routeDestination}> {destinationName} </Text>
 					<Text style={styles.routeTime}> {isRing ? 'Ring' : (timeRemaining == 'Done For Today!' ? 'Done For Today!' : <Timer seconds={timeRemaining} nextOne={nextOne}/>)} </Text>
-					<Text style={styles.routeRawData}> {rawData} </Text>
+          <View style={styles.routeRawContainer}>{rawPrint}</View>
 					<Text style={styles.routeNextOne}> {nextOne == 'Done!' ? ' ' : 'Next One: '+nextOne} </Text>
 				</View>
 			)
@@ -172,32 +192,32 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#F6F6F6',
     borderWidth: 2,
-    borderRadius: 2,
     borderColor: '#DDD',
     borderBottomColor: '#D50000'
   },
   routeDestination: {
     fontSize: 22,
-    fontWeight: '600',
+    fontWeight: '500',
     color: '#151515',
     marginTop: 5,
     marginBottom: 20
   },
   routeTime: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '500',
     color: '#D50000',
     marginBottom: 5
   },
+  routeRawContainer: {
+		marginTop: 15,
+		marginBottom: 15,
+		justifyContent: 'center',
+  	alignItems: 'center'
+	},
   routeRawData: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    textAlign: 'center',
-    fontSize: 12,
-    marginTop: 15,
-    marginBottom: 15,
+    fontSize: 11,
     color: '#424242',
-    lineHeight: 14
+		lineHeight: 15
   },
   routeNextOne: {
     fontSize: 12,

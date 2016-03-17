@@ -1,8 +1,8 @@
 import React, {
   Component,
   StyleSheet,
-  Text,
-  View
+  View,
+  Image
 } from 'react-native';
 
 export default class Splash extends Component {
@@ -17,9 +17,7 @@ export default class Splash extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.splash}>
-          BilgiShuttle Splash Screen
-        </Text>
+        <Image source={require('./Splash.png')} style={styles.splash} />
       </View>
     );
   }
@@ -28,13 +26,10 @@ export default class Splash extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#D50000'
   },
   splash: {
-    fontSize: 24,
-    textAlign: 'center',
-    color: '#fff'
+    flex: 1,
+    width: null,
+    height: null
   },
 });

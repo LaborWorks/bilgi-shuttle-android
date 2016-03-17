@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   },
 
   nodeBoxContainer: {
-    borderRadius: 5
+    borderRadius: 0
   },
 
   nodeBox: {
@@ -247,7 +247,6 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#F6F6F6',
     borderWidth: 2,
-    borderRadius: 3,
     borderColor: '#DDD',
     borderBottomColor: '#D50000',
   },
