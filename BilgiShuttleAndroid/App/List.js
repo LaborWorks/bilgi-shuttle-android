@@ -9,7 +9,8 @@ import React, {
   Alert,
   Navigator,
   ToolbarAndroid,
-  BackAndroid
+  BackAndroid,
+  ProgressBarAndroid
 } from 'react-native';
 
 import Detail from './Detail';
@@ -193,7 +194,19 @@ export default class List extends React.Component {
       <View style={styles.container}>
         <ToolbarAndroid style={styles.navCore} titleColor="white" title="Bilgi Shuttle" />
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          { this.state.loaded ? nodeList : <Text> Loading </Text> }
+          {this.state.loaded
+            ?
+            nodeList
+            :
+            <ProgressBarAndroid
+            style={{
+              marginTop: 50,
+              height: 50
+            }}
+            color= '#D50000'
+            styleAttr="Inverse"
+            />
+          }
         </ScrollView>
       </View>
     );
