@@ -13,6 +13,15 @@ import React, {
   ProgressBarAndroid
 } from 'react-native';
 
+import {
+  Analytics,
+  Hits as GAHits,
+  Experiment as GAExperiment
+} from 'react-native-google-analytics';
+import DeviceInfo from 'react-native-device-info';
+
+var ga = this.ga = null;
+
 import Detail from './Detail';
 
 // Device Width for Responsive Units
@@ -47,6 +56,13 @@ export default class List extends React.Component {
       this.props.navigator.pop();
       return true;
     });
+  }
+
+  componentWillMount() {
+      let clientId = DeviceInfo.getUniqueID();
+      ga = new Analytics('UA-60761252-3', clientId);
+      var screenView = new GAHits.ScreenView('Bilgi Shuttle', 'Welcome Screen', '1', 'bilgishuttle.android');
+      ga.send(screenView);
   }
 
   // WORKING & UPDATED PART FOR ASYNCSTORAGE -------------- //
