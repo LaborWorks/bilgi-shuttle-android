@@ -27,6 +27,7 @@ $ npm install
 ## Open your Android emulator. (We use Genymotion)
 
 ## Then run the following command inside project folder.
+$ react-native start
 $ react-native run-android
 
 ## Developer menu can be opened by using devices' menu.

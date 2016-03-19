@@ -1,0 +1,6 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="android:statusBarColor">#B71C1C</item>
+    </style>
+</resources>
