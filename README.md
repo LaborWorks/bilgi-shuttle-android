@@ -1,4 +1,4 @@
-#Bilgi Shuttle Android Application
+# Bilgi Shuttle Android Application
 
 Basic but useful Android application for listing the shuttle routes and times of İstanbul Bilgi University, built with [React Native](https://facebook.github.io/react-native/).
 
@@ -7,7 +7,7 @@ Data comes from [bilgi-shuttle-api](https://github.com/mdegis/bilgi-shuttle/), p
 - iOS version: [bilgi-shuttle-ios](https://github.com/bilgishuttle/bilgi-shuttle-ios)
 - Web version: [bilgi-shuttle-webapp](https://github.com/bilgishuttle/bilgi-shuttle-web)
 
-##Installation
+## Installation
 ```bash
 # Install node & npm (or update if you have an older version)
 https://nodejs.org/
@@ -22,7 +22,7 @@ $ cd bilgi-shuttle-android/BilgiShuttleAndroid
 $ npm install
 ```
 
-##Usage
+## Usage
 ```bash
 ## Open your Android emulator. (We use Genymotion)
 
@@ -33,15 +33,15 @@ $ react-native run-android
 ## Developer menu can be opened by using devices' menu.
 ```
 
-##Screenshots
-<img src="Screenshots/bs_android_01.png" width="19%">
-<img src="Screenshots/bs_android_02.png" width="19%">
-<img src="Screenshots/bs_android_03.png" width="19%">
-<img src="Screenshots/bs_android_04.png" width="19%">
-<img src="Screenshots/bs_android_05.png" width="19%">
+## Screenshots
+<img src="Screenshots/bs_android_01.png" width="20%">
+<img src="Screenshots/bs_android_02.png" width="20%">
+<img src="Screenshots/bs_android_03.png" width="20%">
+<img src="Screenshots/bs_android_04.png" width="20%">
+<img src="Screenshots/bs_android_05.png" width="20%">
 
 
-##License
+## License
 
 	Copyright [2016] [Altay Aydemir]
 
