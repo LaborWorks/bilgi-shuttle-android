@@ -8,7 +8,7 @@ import React, {
 export default class Splash extends Component {
   componentWillMount() {
     setTimeout( () => {
-      this.props.navigator.replace ({
+      this.props.navigator.replace({
         id: 'List'
       });
     }, 1000);
